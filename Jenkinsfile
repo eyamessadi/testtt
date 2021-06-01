@@ -1,17 +1,28 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:6-alpine'
-            args '-p 5000:5000'
-        }
+  agent any
+    
+  tools {nodejs "NodeJS"}
+    
+  stages {
+        
+    stage('Git') {
+      steps {
+        git 'https://github.com/eyamessadi/testtt.git'
+      }
     }
      
-    stages {
-        stage('Build') {
-            steps {
-                sh 'npm install'
-            }
-        }
-        
+    stage('Build') {
+      steps {
+        sh 'npm install'
+         
+      }
+    }  
+    
+            
+    stage('Test') {
+      steps {
+        sh 'node test'
+      }
     }
+  }
 }
