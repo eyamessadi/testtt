@@ -1,0 +1,35 @@
+
+version: "3"
+services:
+  api:
+    container_name: api
+    build: . # Localisation du Dockerfile dans notre cas dans le dossier racine
+    ports:
+      - 5000:5000 # Nous exposons le port 5000
+    volumes:
+      - ./:/usr/src/app # Le volume du WORKDIR
+      - /usr/src/app/node_modules
+    environment:
+      - PORT=5000 # Nous pouvons définir ici plusieurs variables d'environnement
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:3.6
+    volumes:
+      - mongo-storage:/data/db # Nous pouvons ajouter un volume à ce container afin de stocker les données de la base
+    expose:
+      - 27017
+    ports:
+      - 27017:27017
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+
+    
+
+# Définition des volumes:
+volumes:
+  mongo-storage:
+    driver: local
