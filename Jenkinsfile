@@ -5,11 +5,7 @@ pipeline {
     
   stages {
         
-    stage('Git') {
-      steps {
-        git 'https://github.com/eyamessadi/testtt.git'
-      }
-    }
+  
      
     stage('Build') {
       steps {
